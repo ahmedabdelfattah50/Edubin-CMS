@@ -20,6 +20,8 @@ Route::get('/', 'CategoriesController@index');
 // ======== this is all routes of auth ==>> (login, register, ....)
 Auth::routes();
 
+
+
 // ======== this route to go to home page
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -28,4 +30,11 @@ Route::resource('/categories','CategoriesController');
 
 // ======== route resource of posts
 Route::resource('/posts','PostsController');
+
+// ======== route for trashed-posts restore posts
+Route::get('/trashed-posts/{id}', 'PostsController@restoreTrashed')->name('trashedPosts.restore');
+
+// ======== route for trashed-posts posts
 Route::get('/trashed-posts', 'PostsController@trashedPosts')->name('trashedPosts.index');
+
+

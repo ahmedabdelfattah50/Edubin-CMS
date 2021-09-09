@@ -101,4 +101,11 @@ class PostsController extends Controller
         $trashedPosts = Post::onlyTrashed()->get();
         return view('posts.index')->with('posts',$trashedPosts);
     }
+
+    // ######### restore trashed posts
+    public function restoreTrashed($id){
+        Post::withTrashed()->where('id',$id)->restore();
+        session()->flash('success','The post has been restored successfully');
+        return redirect(route('posts.index'));
+    }
 }
