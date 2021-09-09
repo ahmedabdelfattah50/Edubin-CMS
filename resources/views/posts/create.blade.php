@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('styleTrix')
+    <link rel="stylesheet" href="{{ asset('css/trix.min.css') }}">
+@endsection
+
 @section('content')
     <div class="container">
         <div class="card">
@@ -25,14 +29,16 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Content</label>
-                        <textarea name="postContent" class="form-control @error('description') is-invalid @enderror" placeholder="Enter Content" rows="8"></textarea>
+                        <input id="x" class="form-control @error('postContent') is-invalid @enderror" placeholder="Enter Content" type="hidden" name="postContent">
+                        <trix-editor input="x" placeholder="Enter Content"></trix-editor>
+{{--                        <textarea name="postContent" class="form-control @error('description') is-invalid @enderror" placeholder="Enter Content" rows="8"></textarea>--}}
                         @error('postContent')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Image</label>
-                        <input name="image" type="file" class="form-control @error('description') is-invalid @enderror">
+                        <input name="image" type="file" class="form-control @error('image') is-invalid @enderror">
                         @error('image')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
@@ -42,4 +48,8 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scriptField')
+    <script type="text/javascript" src="{{ asset('js/trix.min.js') }}"></script>
 @endsection

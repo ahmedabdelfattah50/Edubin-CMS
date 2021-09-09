@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PostRequest extends FormRequest
+class UpdatePostRequest extends FormRequest
 {
 
     public function authorize()
@@ -15,10 +15,9 @@ class PostRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|unique:posts',
+            'title' => 'required',
             'description' => 'required',
-            'postContent' => 'required',
-            'image' => 'required|image'
+            'content' => 'required'
         ];
     }
 }

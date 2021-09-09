@@ -19,6 +19,7 @@
 
 
     <!-- Styles -->
+    @yield('styleTrix')
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
@@ -100,9 +101,9 @@
             @auth
                 <div class="row">
                     <div class="list-group py-4 col-md-4">
-                        <a href="{{ route('posts.index') }}" class="list-group-item list-group-item-action">Posts</a>
                         <a href="{{ route('categories.index') }}" class="list-group-item list-group-item-action">Categories</a>
-                        <a href="#" class="list-group-item list-group-item-action">Setteings</a>
+                        <a href="{{ route('posts.index') }}" class="list-group-item list-group-item-action">Posts</a>
+                        <a href="{{ route('trashedPosts.index') }}" class="list-group-item list-group-item-action">Trashed Posts</a>
                     </div>
                     <main class="py-4 col-md-8">
                         @yield('content')
@@ -120,3 +121,5 @@
     </div>
 </body>
 </html>
+
+@yield('scriptField')

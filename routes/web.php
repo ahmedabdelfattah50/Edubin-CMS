@@ -28,3 +28,4 @@ Route::resource('/categories','CategoriesController');
 
 // ======== route resource of posts
 Route::resource('/posts','PostsController');
+Route::get('/trashed-posts', 'PostsController@trashedPosts')->name('trashedPosts.index');
