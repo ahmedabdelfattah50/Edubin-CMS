@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Storage;
 
 class PostsController extends Controller
 {
+    // ######### construct function on the controller
+    public function __construct(){
+        $this->middleware('CheckCategory')->only('create');
+
+    }
 
     // ######### index function to return to index page
     public function index()
@@ -23,6 +28,7 @@ class PostsController extends Controller
         return view('posts.create')->with('categories', Category::all());
     }
 
+    // ######### Store function to store data in the dataBase
     public function store(PostRequest $request)
     {
         // #### this is to store the image in the folder in public
@@ -75,6 +81,7 @@ class PostsController extends Controller
         // ### update the post
         $post->update($data);
 
+        // return success message in the posts index page
         session()->flash('success','The post has been updated successfully');
         return redirect(route('posts.index'));
     }
@@ -107,6 +114,8 @@ class PostsController extends Controller
     // ######### restore trashed posts
     public function restoreTrashed($id){
         Post::withTrashed()->where('id',$id)->restore();
+
+        // return success message in the posts index page
         session()->flash('success','The post has been restored successfully');
         return redirect(route('posts.index'));
     }

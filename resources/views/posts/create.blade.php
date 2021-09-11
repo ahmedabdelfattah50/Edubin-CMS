@@ -43,7 +43,6 @@
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
-
                     <div class="form-group">
                         <label for="exampleInputEmail1">Select Category</label>
                         <select name="categoryID" class="form-control" id="exampleFormControlSelect1">
