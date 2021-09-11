@@ -30,19 +30,23 @@
                                 <td><h4>{{ $post->title }}</h4></td>
                                 <td>
                                     <div class="btnsOptions pt-2">
-                                        @if(!$post->trashed())
-                                        <a href="{{ route('posts.show', $post->id) }}" class="btn btn-success">View <i class="far fa-eye"></i></a>
-                                        @endif
-                                        @if(!$post->trashed())
-                                        <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-primary">Edit <i class="far fa-edit"></i></a>
+                                        @guest
+                                            <a href="{{ route('posts.show', $post->id) }}" class="btn btn-success">View <i class="far fa-eye"></i></a>
                                         @else
-                                            <a href="{{ route('trashedPosts.restore', $post->id) }}" class="btn btn-primary">Restore <i class="far fa-window-restore"></i></a>
-                                        @endif
-                                        <form action="{{ route('posts.destroy', $post->id) }}" class="d-inline-block" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <input type="submit" class="btn btn-danger" value="{{ $post->trashed() ? 'Delete' : 'Trash'}}">
-                                        </form>
+                                            @if(!$post->trashed())
+                                                <a href="{{ route('posts.show', $post->id) }}" class="btn btn-success">View <i class="far fa-eye"></i></a>
+                                            @endif
+                                            @if(!$post->trashed())
+                                                <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-primary">Edit <i class="far fa-edit"></i></a>
+                                            @else
+                                                <a href="{{ route('trashedPosts.restore', $post->id) }}" class="btn btn-primary">Restore <i class="far fa-window-restore"></i></a>
+                                            @endif
+                                            <form action="{{ route('posts.destroy', $post->id) }}" class="d-inline-block" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <input type="submit" class="btn btn-danger" value="{{ $post->trashed() ? 'Delete' : 'Trash'}}">
+                                            </form>
+                                        @endguest
                                     </div>
                                 </td>
                             </tr>
