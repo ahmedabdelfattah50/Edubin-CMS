@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Http\Requests\PostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Post;
@@ -19,7 +20,7 @@ class PostsController extends Controller
     // ######### create function to return to create form
     public function create()
     {
-        return view('posts.create');
+        return view('posts.create')->with('categories', Category::all());
     }
 
     public function store(PostRequest $request)
@@ -30,6 +31,7 @@ class PostsController extends Controller
         Post::create([
             'title' => $request->title,
             'description' => $request->description,
+            'category_id' => $request->categoryID,
             'content' => $request->postContent,
             'image' => $imageStore
         ]);

@@ -9,6 +9,10 @@ class Post extends Model
 {
     use SoftDeletes;
     protected $fillable = [
-        'title', 'description', 'content', 'image'
+        'title', 'description', 'category_id', 'content', 'image'
     ];
+
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
 }

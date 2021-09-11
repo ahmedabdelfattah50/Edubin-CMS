@@ -20,8 +20,6 @@ Route::get('/', 'CategoriesController@index');
 // ======== this is all routes of auth ==>> (login, register, ....)
 Auth::routes();
 
-
-
 // ======== this route to go to home page
 Route::get('/home', 'HomeController@index')->name('home');
 
