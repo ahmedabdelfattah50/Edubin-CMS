@@ -103,6 +103,7 @@
                 <div class="row">
                     <div class="list-group py-4 col-md-4">
                         <a href="{{ route('categories.index') }}" class="list-group-item list-group-item-action">Categories</a>
+                        <a href="{{ route('tags.index') }}" class="list-group-item list-group-item-action">Tags</a>
                         <a href="{{ route('posts.index') }}" class="list-group-item list-group-item-action">Posts</a>
                         <a href="{{ route('trashedPosts.index') }}" class="list-group-item list-group-item-action">Trashed Posts</a>
                     </div>

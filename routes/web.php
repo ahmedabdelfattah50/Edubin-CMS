@@ -28,6 +28,9 @@ Route::group(['middleware' => 'auth'], function (){
     // ======== route resource of categories
     Route::resource('/categories','CategoriesController');
 
+    // ======== route resource of categories
+    Route::resource('/tags','TagsController');
+
     // ======== route resource of posts
     Route::resource('/posts','PostsController');
 

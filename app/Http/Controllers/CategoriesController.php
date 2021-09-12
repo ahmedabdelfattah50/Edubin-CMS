@@ -7,8 +7,7 @@ use App\Http\Requests\categoryRequest;
 
 class CategoriesController extends Controller
 {
-    /* ====== index function to go to categories index page with values of all categories in
-              Category model ====== */
+    /* ====== index function to go to categories index page with values of all categories in Category model ====== */
     public function index()
     {
         return view('categories.index')->with('categories',Category::all());
@@ -30,13 +29,13 @@ class CategoriesController extends Controller
         return redirect(route('categories.index'));
     }
 
-
+    /* ====== show function to show only one Category ====== */
     public function show($id)
     {
         //
     }
 
-
+    /* ====== edit function to go to the edit blade to update the data of tag from the form of edit ====== */
     public function edit(Category $category)
     {
         // ####### if I used the same form of create to be update form
@@ -46,7 +45,6 @@ class CategoriesController extends Controller
         return view('categories.edit')->with('category', $category);
     }
 
-
     // ######## update function for categories
     public function update(categoryRequest $request, Category $category)
     {
@@ -54,14 +52,17 @@ class CategoriesController extends Controller
             'name' => $request->name
         ]);
 
+        // return success message in the index page
         session()->flash('middle','The category has been updated successfully');
         return redirect(route('categories.index'));
     }
 
-
+    // ######## delete function for categories
     public function destroy(Category $category)
     {
         $category->delete();
+
+        // return error message in the index page
         session()->flash('error','The category has been deleted successfully');
         return redirect(route('categories.index'));
     }
