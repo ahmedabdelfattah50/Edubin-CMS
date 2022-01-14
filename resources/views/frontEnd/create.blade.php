@@ -1,7 +1,10 @@
 @extends('layouts.app')
 
-@section('styleTrix')
+@section('styleField')
+    {{--  ##### CSS CDN for trix editor Libaray ##### --}}
     <link rel="stylesheet" href="{{ asset('css/trix.min.css') }}">
+    {{--  ##### CSS CDN for select2 Libaray ##### --}}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endsection
 
 @section('content')
@@ -31,7 +34,6 @@
                         <label for="exampleInputEmail1">Content</label>
                         <input id="x" class="form-control @error('postContent') is-invalid @enderror" placeholder="Enter Content" type="hidden" name="postContent">
                         <trix-editor input="x" placeholder="Enter Content"></trix-editor>
-{{--                        <textarea name="postContent" class="form-control @error('description') is-invalid @enderror" placeholder="Enter Content" rows="8"></textarea>--}}
                         @error('postContent')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
@@ -54,6 +56,18 @@
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Select Tags</label>
+                        <select name="tags[]" class="form-control tagsSelection" id="exampleFormControlSelect1" multiple>
+                            @foreach($tags as $tag)
+                                <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('tags')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <input type="hidden" name="user_id" value="{{ Auth()->user()->id }}">
                     <button type="submit" class="btn btn-success">Add <i class="far fa-address-card"></i></button>
                 </form>
             </div>
@@ -62,5 +76,13 @@
 @endsection
 
 @section('scriptField')
+    {{--  ##### JS CDN for trix editor Libaray ##### --}}
     <script type="text/javascript" src="{{ asset('js/trix.min.js') }}"></script>
+    {{--  ##### JS CDN for select2 Libaray ##### --}}
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.tagsSelection').select2();
+        });
+    </script>
 @endsection

@@ -10,13 +10,14 @@
                 <div class="card">
                     <div class="card-header">All Posts <span class="badge badge-warning">{{ $posts->count() }}</span></div>
                     @if( $posts->count() == 0)
-                        <h3 class="alert alert-danger m-0">Sorry, no posts found</h3>
+                        <h4 class="alert alert-danger m-0" style="border:0; border-radius: 0">Sorry, no posts found</h4>
                     @else
                     <table class="table">
                         <thead>
                             <tr>
                                 <th scope="col">Image</th>
                                 <th scope="col">Title</th>
+                                <th scope="col">Tags</th>
                                 <th scope="col">Options</th>
                             </tr>
                         </thead>
@@ -28,6 +29,7 @@
                                     <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" title="{{ $post->title }}" height="100px" width="200px" style="border-radius: 10px">
                                 </th>
                                 <td><h4>{{ $post->title }}</h4></td>
+                                <td><h4><span class="badge badge-warning">{{ $post->tags->count() }}</span></h4></td>
                                 <td>
                                     <div class="btnsOptions pt-2">
                                         @guest

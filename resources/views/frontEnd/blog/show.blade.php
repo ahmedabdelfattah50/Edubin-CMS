@@ -19,7 +19,8 @@
                     <div class="form-group">
                         <label for="exampleInputEmail1">Content</label>
                         <textarea id="contentTextarea" style="white-space: normal" name="postContent" class="form-control" readonly rows="8">
-
+{{--                            {!! $post->content !!}--}}
+                            {!! $post->content !!}
                         </textarea>
                     </div>
                     <div class="form-group">

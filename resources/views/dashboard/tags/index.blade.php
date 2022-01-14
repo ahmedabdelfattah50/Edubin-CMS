@@ -10,7 +10,7 @@
                 <div class="card">
                     <div class="card-header">All Tags <span class="badge badge-warning">{{ \App\Tag::count() }}</span></div>
                     @if( \App\Tag::count() == 0)
-                        <h3 class="alert alert-danger m-0">Sorry, no tags found</h3>
+                        <h4 class="alert alert-danger m-0" style="border:0; border-radius: 0">Sorry, no tags found</h4>
                     @else
                         <table class="table">
                             <thead>
@@ -23,7 +23,7 @@
                             <?php $counter = 1 ?>
                             @foreach($tags as $tag)
                                 <tr>
-                                    <td><h4>{{ $tag->name }}</h4></td>
+                                    <td><h4>{{ $tag->name }} <span class="badge badge-warning">{{ $tag->posts->count() }}</span></h4></td>
                                     <td>
                                         <div class="btnsOptions pt-2">
                                             <a href="{{ route('tags.edit', $tag->id) }}" class="btn btn-primary">Edit <i class="far fa-edit"></i></a>

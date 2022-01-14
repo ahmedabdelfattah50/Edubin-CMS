@@ -10,7 +10,7 @@
                 <div class="card">
                     <div class="card-header">All Categories <span class="badge badge-warning">{{ \App\Category::count() }}</span></div>
                     @if( \App\Category::count() == 0)
-                        <h3 class="alert alert-danger m-0">Sorry, no categories found</h3>
+                        <h4 class="alert alert-danger m-0" style="border:0; border-radius: 0">Sorry, no categories found</h4>
                     @else
                         <table class="table">
                             <thead>
@@ -23,7 +23,7 @@
                             <?php $counter = 1 ?>
                             @foreach($categories as $category)
                                 <tr>
-                                    <td><h4>{{ $category->name }}</h4></td>
+                                    <td><h4>{{ $category->name }} <span class="badge badge-warning">{{ $category->posts->count() }}</span></h4></td>
                                     <td>
                                         <div class="btnsOptions pt-2">
                                             <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-primary">Edit <i class="far fa-edit"></i></a>

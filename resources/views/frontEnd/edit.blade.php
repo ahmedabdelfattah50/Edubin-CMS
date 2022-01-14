@@ -1,7 +1,10 @@
 @extends('layouts.app')
 
-@section('styleTrix')
+@section('styleField')
+    {{--  ##### CSS CDN for trix editor Libaray ##### --}}
     <link rel="stylesheet" href="{{ asset('css/trix.min.css') }}">
+    {{--  ##### CSS CDN for select2 Libaray ##### --}}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endsection
 
 @section('content')
@@ -42,6 +45,36 @@
                         </div>
                         <input name="image" type="file" class="form-control">
                     </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Select Category</label>
+                        <select name="category_id" class="form-control" id="exampleFormControlSelect1">
+                            @foreach($categories as $category)
+                                @if($category->id == $post->category_id)
+                                    <option value="{{ $category->id }}" selected>{{ $category->name }}</option>
+                                @else
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                        @error('category_id')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Select Tags</label>
+                        <select name="tags[]" class="form-control tagsSelection" id="exampleFormControlSelect1" multiple>
+                            @foreach($tags as $tag)
+                                <option value="{{ $tag->id }}"
+                                @if($post->hasTag($tag->id))
+                                    selected
+                                @endif
+                                >{{ $tag->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('tags')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
                     <button type="submit" class="btn btn-success">Update <i class="far fa-address-card"></i></button>
                 </form>
             </div>
@@ -51,5 +84,13 @@
 @endsection
 
 @section('scriptField')
+    {{--  ##### JS CDN for trix editor Libaray ##### --}}
     <script type="text/javascript" src="{{ asset('js/trix.min.js') }}"></script>
+    {{--  ##### JS CDN for select2 Libaray ##### --}}
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.tagsSelection').select2();
+        });
+    </script>
 @endsection
