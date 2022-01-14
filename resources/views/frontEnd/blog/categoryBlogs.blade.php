@@ -1,6 +1,6 @@
 @extends('layouts.frontEnd.app')
 
-@section('title', 'Blogs')
+@section('title', 'Category Blogs')
 
 @section('content')
     <!--====== PAGE BANNER PART START ======-->
@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="page-banner-cont">
-                        <h2>Blogs</h2>
+                        <h2>Blogs have <span style="text-decoration: underline; color: #ffc600">{{ $category->name }}</span> Category</h2>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ route('website.home') }}">Home</a></li>
@@ -28,55 +28,25 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8">
-                    @foreach($posts as $post)
+                    @forelse($catPosts as $catPost)
                     <div class="singel-blog mt-30">
                         <div class="blog-thum">
-                            <img src="{{ asset('storage/' . $post->image) }}" alt="Blog">
+                            <img src="{{ asset('storage/' . $catPost->image) }}" alt="Blog">
                         </div>
                         <div class="blog-cont">
-                            <a href="{{ route('blog.show', $post->id) }}"><h3>{{ $post->title }}</h3></a>
+                            <a href="{{ route('blog.show', $catPost->id) }}"><h3>{{ $catPost->title }}</h3></a>
                             <ul>
-                                <li><a href="#"><i class="fa fa-calendar"></i>25 Dec 2018</a></li>
-                                <li><a href="#"><i class="fa fa-user"></i>{{ $post->user->name }}</a></li>
-                                <li><a href="#"><i class="fa fa-tags"></i>{{ $post->category->name }}</a></li>
+                                <li><a href="#"><i class="fa fa-calendar"></i>{{ $catPost->created_at->format('d M Y') }}</a></li>
+                                <li><a href="#"><i class="fa fa-user"></i>{{ $catPost->user->name }}</a></li>
+                                <li><a href="#"><i class="fa fa-tags"></i>{{ $catPost->category->name }}</a></li>
                             </ul>
-                            <p>{{ $post->description }}</p>
-                            <a href="{{ route('blog.show', $post->id) }}" style="color: #ffc600; text-decoration: underline">Countinue Read</a>
+                            <p>{{ $catPost->description }}</p>
+                            <a href="{{ route('blog.show', $catPost->id) }}" style="color: #ffc600; text-decoration: underline">Countinue Read</a>
                         </div>
                     </div> <!-- singel blog -->
-                    @endforeach
-{{--                    <div class="singel-blog mt-30">--}}
-{{--                        <div class="blog-thum">--}}
-{{--                            <img src="{{ asset('storage/frontEnd/blog/b-2.jpg') }}" alt="Blog">--}}
-{{--                        </div>--}}
-{{--                        <div class="blog-cont">--}}
-{{--                            <a href="blog-singel.html"><h3>Few tips for get better results in examination</h3></a>--}}
-{{--                            <ul>--}}
-{{--                                <li><a href="#"><i class="fa fa-calendar"></i>25 Dec 2018</a></li>--}}
-{{--                                <li><a href="#"><i class="fa fa-user"></i>Mark anthem</a></li>--}}
-{{--                                <li><a href="#"><i class="fa fa-tags"></i>Education</a></li>--}}
-{{--                            </ul>--}}
-{{--                            <p>Lorem ipsum gravida nibh vel velit auctor aliquetn sollicitudirem quibibendum auci elit cons equat ipsutis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus .</p>--}}
-{{--                        </div>--}}
-{{--                    </div> <!-- singel blog -->--}}
-                    {{-- <nav class="courses-pagination mt-50">
-                        <ul class="pagination justify-content-lg-end justify-content-center">
-                            <li class="page-item">
-                                <a href="#" aria-label="Previous">
-                                    <i class="fa fa-angle-left"></i>
-                                </a>
-                            </li>
-                            <li class="page-item"><a class="active" href="#">1</a></li>
-                            <li class="page-item"><a href="#">2</a></li>
-                            <li class="page-item"><a href="#">3</a></li>
-                            <li class="page-item">
-                                <a href="#" aria-label="Next">
-                                    <i class="fa fa-angle-right"></i>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>  <!-- courses pagination -->
-                    --}}
+                    @empty
+                        <p class="alert alert-danger"><i class="fa fa-exclamation-triangle"></i> Sorry, no blogs founded</p>
+                    @endforelse
                 </div>
                 @include('layouts.frontEnd.blog.sideBar')
             </div> <!-- row -->

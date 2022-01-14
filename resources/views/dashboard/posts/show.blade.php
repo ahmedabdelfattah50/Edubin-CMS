@@ -18,13 +18,19 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Content</label>
-{{--                        <textarea id="contentTextarea" style="white-space: normal" name="postContent" class="form-control" readonly rows="8">--}}
-{{--                            {!! $post->content !!}--}}
-{{--                            {!! $post->content !!}--}}
-{{--                        </textarea>--}}
-{{--                        <div>--}}
                             <div style="white-space: normal" name="postContent" class="form-control" readonly>{!! $post->content !!}</div>
-{{--                        </div>--}}
+                    </div>
+                    <div class="form-group">
+                        <label>Writer Name</label>
+                        <input value="{{ $post->user->name }}" name="title" type="text" class="form-control" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Category Name</label>
+                        <input value="{{ $post->category->name }}" name="title" type="text" class="form-control" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Post Date</label>
+                        <input value="{{ $post->created_at->format('d / m / Y') }}" name="title" type="text" class="form-control" readonly>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Image</label>

@@ -6,13 +6,7 @@ use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
 {
-    /**
-     * The application's global HTTP middleware stack.
-     *
-     * These middleware are run during every request to your application.
-     *
-     * @var array
-     */
+    // The application's global HTTP middleware stack.
 
     // ======== Global Middleware
     protected $middleware = [
@@ -25,11 +19,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
     ];
 
-    /**
-     * The application's route middleware groups.
-     *
-     * @var array
-     */
+    // The application's route middleware groups.
 
     // ======== Middleware Groups
     protected $middlewareGroups = [
@@ -51,10 +41,7 @@ class Kernel extends HttpKernel
 
     /**
      * The application's route middleware.
-     *
-     * These middleware may be assigned to groups or used individually.
-     *
-     * @var array
+     * These middlewares may be assigned to group or used individually.
      */
 
     // ======== Middleware Route
@@ -69,6 +56,11 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+
+        // ###### check category middleware for redirect to create category
         'CheckCategory' => \App\Http\Middleware\CheckCategory::class,
+
+        // ###### check user middleware if he is an admin or user
+        'admin' => \App\Http\Middleware\VerfiyIsAdmin::class,
     ];
 }

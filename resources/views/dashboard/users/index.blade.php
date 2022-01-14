@@ -30,8 +30,6 @@
                                 <th scope="col">Image</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Role</th>
-{{--                                <th scope="col">Tags</th>--}}
-{{--                                <th scope="col">Options</th>--}}
                             </tr>
                         </thead>
                         <tbody>
@@ -40,7 +38,6 @@
                             <tr class="">
                                 <th>
                                     <img src="{{ asset('storage/' . $user->getAvatar()) }}" alt="{{ $user->name }}" title="{{ $user->name }}" height="70px" width="70px" style="border-radius: 10px">
-{{--                                    <span>Avatar</span>--}}
                                 </th>
                                 <td><h5>{{ $user->name }}</h5></td>
                                 <td>
@@ -50,35 +47,9 @@
                                             <button type="submit" class="btn btn-primary">Make Admin</button>
                                         </form>
                                     @else
-{{--                                        <form action="{{ route('users.make-writer', $user->id) }}" method="post">--}}
-{{--                                            @csrf--}}
-{{--                                            <button type="submit" class="btn btn-success">Make Writer</button>--}}
-{{--                                        </form>--}}
                                         <h5>Admin</h5>
                                     @endif
                                 </td>
-{{--                                <td><h4><span class="badge badge-warning">{{ $post->tags->count() }}</span></h4></td>--}}
-{{--                                <td>--}}
-{{--                                    <div class="btnsOptions pt-2">--}}
-{{--                                        @guest--}}
-{{--                                            <a href="{{ route('posts.show', $post->id) }}" class="btn btn-success">View <i class="far fa-eye"></i></a>--}}
-{{--                                        @else--}}
-{{--                                            @if(!$post->trashed())--}}
-{{--                                                <a href="{{ route('posts.show', $post->id) }}" class="btn btn-success">View <i class="far fa-eye"></i></a>--}}
-{{--                                            @endif--}}
-{{--                                            @if(!$post->trashed())--}}
-{{--                                                <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-primary">Edit <i class="far fa-edit"></i></a>--}}
-{{--                                            @else--}}
-{{--                                                <a href="{{ route('trashedPosts.restore', $post->id) }}" class="btn btn-primary">Restore <i class="far fa-window-restore"></i></a>--}}
-{{--                                            @endif--}}
-{{--                                            <form action="{{ route('posts.destroy', $post->id) }}" class="d-inline-block" method="POST">--}}
-{{--                                                @csrf--}}
-{{--                                                @method('DELETE')--}}
-{{--                                                <input type="submit" class="btn btn-danger" value="{{ $post->trashed() ? 'Delete' : 'Trash'}}">--}}
-{{--                                            </form>--}}
-{{--                                        @endguest--}}
-{{--                                    </div>--}}
-{{--                                </td>--}}
                             </tr>
                         @endforeach
                         </tbody>

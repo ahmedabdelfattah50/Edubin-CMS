@@ -6,6 +6,7 @@ use App\Category;
 use App\Http\Requests\PostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Post;
+use App\Tag;
 use Illuminate\Support\Facades\Storage;
 
 class PostsController extends Controller
@@ -13,34 +14,42 @@ class PostsController extends Controller
     // ######### construct function on the controller
     public function __construct(){
         $this->middleware('CheckCategory')->only('create');
-
     }
 
     // ######### index function to return to index page
     public function index()
     {
-        return view('posts.index')->with('posts',Post::all());
+        return view('dashboard.posts.index')->with('posts',Post::all());
     }
 
     // ######### create function to return to create form
     public function create()
     {
-        return view('posts.create')->with('categories', Category::all());
+        return view('dashboard.posts.create')->with('categories', Category::all())
+                                        ->with('tags', Tag::all());
     }
 
     // ######### Store function to store data in the dataBase
     public function store(PostRequest $request)
     {
+//        dd($request->all());
         // #### this is to store the image in the folder in public
         $imageStore = $request->image->store('posts','public');
 
-        Post::create([
+        $post = Post::create([
             'title' => $request->title,
             'description' => $request->description,
+            'user_id' => $request->user_id,
             'category_id' => $request->categoryID,
             'content' => $request->postContent,
             'image' => $imageStore
         ]);
+
+        /* this to achieve the relationship between posts and tags
+           and store data in posts_tags table this relationship is many to many */
+        if($request->tags){
+            $post->tags()->attach($request->tags);
+        }
 
         // return success message in the index page
         session()->flash('success','The post has been created successfully');
@@ -50,21 +59,26 @@ class PostsController extends Controller
 
     public function show(Post $post)
     {
-        return view('posts.show')->with('post',$post);
+        return view('dashboard.posts.show')->with('post',$post);
     }
 
 
     public function edit(Post $post)
     {
         // ####### this is to go mainly to edit form
-        return view('posts.edit')->with('post', $post);
+        return view('dashboard.posts.edit', [
+                'post' => $post,
+                'tags' => Tag::all(),
+                'categories' => Category::all()
+        ]);
     }
 
 
     public function update(UpdatePostRequest $request, Post $post)
     {
         // ####### first make sure that the image is updated or not
-        $data = $request->only(['title', 'description', 'content']);
+        $data = $request->all();
+//        dd($data);
 
         // ## if I have image file from edit form
         if($request->hasFile('image')){
@@ -76,6 +90,10 @@ class PostsController extends Controller
 
             // ## set the image in the array (data)
             $data['image'] = $imageStore;
+        }
+
+        if($request->tags){
+            $post->tags()->sync($request->tags);
         }
 
         // ### update the post
@@ -94,7 +112,7 @@ class PostsController extends Controller
             // #### this to delete the image from the storage folder
             Storage::disk('public')->delete($post->image);
 
-            // #### this delete to delete the post from the database
+            // #### this forceDelete function to force website delete the post from the database
             $post->forceDelete();
             session()->flash('error','The post has been deleted successfully');
         } else {
@@ -108,7 +126,7 @@ class PostsController extends Controller
     // ######### get all trashed posts
     public function trashedPosts(){
         $trashedPosts = Post::onlyTrashed()->get();
-        return view('posts.index')->with('posts',$trashedPosts);
+        return view('dashboard.posts.index')->with('posts',$trashedPosts);
     }
 
     // ######### restore trashed posts
@@ -118,5 +136,14 @@ class PostsController extends Controller
         // return success message in the posts index page
         session()->flash('success','The post has been restored successfully');
         return redirect(route('posts.index'));
+    }
+
+    // ######### get my posts in the page
+    public function myPosts(){
+        $posts = Post::all()->where('user_id', Auth()->user()->id);
+        return view('dashboard.posts.index', [
+            'posts' => $posts,
+            'myPosts' => "myPosts"
+        ]);
     }
 }

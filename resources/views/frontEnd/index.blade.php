@@ -540,79 +540,52 @@
                 </div>
             </div> <!-- row -->
             <div class="row">
+                @if(isset($lastPost))
                 <div class="col-lg-6">
                     <div class="singel-news mt-30">
                         <div class="news-thum pb-25">
-                            <img src="{{ asset('storage/frontEnd/news/n-1.jpg') }}" alt="News">
+                            <img src="{{ asset('storage/' . $lastPost->image) }}" alt="News">
                         </div>
                         <div class="news-cont">
                             <ul>
-                                <li><a href="#"><i class="fa fa-calendar"></i>2 December 2018 </a></li>
-                                <li><a href="#"> <span>By</span> Adam linn</a></li>
+                                <li><a href="#"><i class="fa fa-calendar"></i>{{ $lastPost->created_at->format('d M Y') }}</a></li>
+                                <li><a href="{{ route('writer.data', $lastPost->user->id) }}"> <span>By</span> {{ $lastPost->user->name }}</a></li>
                             </ul>
-                            <a href="blog-singel.html"><h3>Tips to grade high cgpa in university life</h3></a>
-                            <p>Lorem ipsum gravida nibh vel velit auctor aliquetn sollicitudirem quibibendum auci elit cons equat ipsutis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt .</p>
+                            <a href="{{ route('blog.show', $lastPost->id) }}"><h3>{{ $lastPost->title }}</h3></a>
+                            <p>{{ $lastPost->description }}</p>
                         </div>
                     </div> <!-- singel news -->
                 </div>
+                @else
+                    <p class="alert alert-danger"><i class="fa fa-exclamation-triangle"></i> OOPS, No blogs founded</p>
+                @endif
+
                 <div class="col-lg-6">
+                    <?php $i = 0; ?>
+                    @foreach($posts as $post)
+                        @if($i < 3)
                     <div class="singel-news news-list">
                         <div class="row">
                             <div class="col-sm-4">
                                 <div class="news-thum mt-30">
-                                    <img src="{{ asset('storage/frontEnd/news/ns-1.jpg') }}" alt="News">
+                                    <img src="{{ asset('storage/' . $post->image) }}" alt="News">
                                 </div>
                             </div>
                             <div class="col-sm-8">
                                 <div class="news-cont mt-30">
                                     <ul>
-                                        <li><a href="#"><i class="fa fa-calendar"></i>2 December 2018 </a></li>
-                                        <li><a href="#"> <span>By</span> Adam linn</a></li>
+                                        <li><a href="#"><i class="fa fa-calendar"></i>{{ $post->created_at->format('d M Y') }} </a></li>
+                                        <li><a href="{{ route('writer.data', $post->user->id) }}"> <span>By</span> {{ $post->user->name }}</a></li>
                                     </ul>
-                                    <a href="blog-singel.html"><h3>Intellectual communication</h3></a>
-                                    <p>Gravida nibh vel velit auctor aliquetn sollicitudirem quibibendum auci elit cons  vel.</p>
+                                    <a href="{{ route('blog.show', $lastPost->id) }}"><h3>{{ $post->title }}</h3></a>
+                                    <p>{{ $post->description }}</p>
                                 </div>
                             </div>
                         </div> <!-- row -->
                     </div> <!-- singel news -->
-                    <div class="singel-news news-list">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <div class="news-thum mt-30">
-                                    <img src="{{ asset('storage/frontEnd/news/ns-2.jpg') }}" alt="News">
-                                </div>
-                            </div>
-                            <div class="col-sm-8">
-                                <div class="news-cont mt-30">
-                                    <ul>
-                                        <li><a href="#"><i class="fa fa-calendar"></i>2 December 2018 </a></li>
-                                        <li><a href="#"> <span>By</span> Adam linn</a></li>
-                                    </ul>
-                                    <a href="blog-singel.html"><h3>Study makes you perfect</h3></a>
-                                    <p>Gravida nibh vel velit auctor aliquetn sollicitudirem quibibendum auci elit cons  vel.</p>
-                                </div>
-                            </div>
-                        </div> <!-- row -->
-                    </div> <!-- singel news -->
-                    <div class="singel-news news-list">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <div class="news-thum mt-30">
-                                    <img src="{{ asset('storage/frontEnd/news/ns-3.jpg') }}" alt="News">
-                                </div>
-                            </div>
-                            <div class="col-sm-8">
-                                <div class="news-cont mt-30">
-                                    <ul>
-                                        <li><a href="#"><i class="fa fa-calendar"></i>2 December 2018 </a></li>
-                                        <li><a href="#"> <span>By</span> Adam linn</a></li>
-                                    </ul>
-                                    <a href="blog-singel.html"><h3>Technology edcution is now....</h3></a>
-                                    <p>Gravida nibh vel velit auctor aliquetn sollicitudirem quibibendum auci elit cons  vel.</p>
-                                </div>
-                            </div>
-                        </div> <!-- row -->
-                    </div> <!-- singel news -->
+                                <?php $i++ ?>
+                            @endif
+                        @endforeach
                 </div>
             </div> <!-- row -->
         </div> <!-- container -->

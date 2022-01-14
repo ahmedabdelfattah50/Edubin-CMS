@@ -29,6 +29,14 @@
 
     <section id="contact-page" class="pt-90 pb-120 gray-bg">
         <div class="container">
+            @if(session()->has('success'))
+                <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+                    {{ session()->get('success') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
             <div class="row">
                 <div class="col-lg-7">
                     <div class="contact-from mt-30">
@@ -37,7 +45,8 @@
                             <h2>Keep in touch</h2>
                         </div> <!-- section title -->
                         <div class="main-form pt-45">
-                            <form id="contact-form" action="{{ route('contact.store') }}" method="POST" data-toggle="validator">
+                             <form action="{{ route('contactUs.store') }}" method="POST">
+                                @csrf
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="singel-form form-group">
@@ -65,11 +74,11 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="singel-form form-group">
-                                            <textarea name="messege" placeholder="Messege" data-error="Please,leave us a message." required="required"></textarea>
+                                            <textarea name="message" placeholder="Messege" data-error="Please,leave us a message." required="required"></textarea>
                                             <div class="help-block with-errors"></div>
                                         </div> <!-- singel form -->
                                     </div>
-                                    <p class="form-message"></p>
+{{--                                    <p class="form-message"></p>--}}
                                     <div class="col-md-12">
                                         <div class="singel-form">
                                             <button type="submit" class="main-btn">Send</button>

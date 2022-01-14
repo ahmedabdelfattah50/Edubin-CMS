@@ -9,11 +9,11 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="page-banner-cont">
-                        <h2>Blog</h2>
+                        <h2>Blogs</h2>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Blog</li>
+                                <li class="breadcrumb-item"><a href="{{ route('website.home') }}">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Blogs</li>
                             </ol>
                         </nav>
                     </div>  <!-- page banner cont -->
@@ -24,41 +24,49 @@
 
     <!--====== PAGE BANNER PART ENDS ======-->
 
-    <!--====== BLOG PART START ======-->
-
     <section id="blog-page" class="pt-90 pb-120 gray-bg">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8">
+                    @forelse($posts as $post)
                     <div class="singel-blog mt-30">
                         <div class="blog-thum">
-                            <img src="{{ asset('storage/frontEnd/blog/b-1.jpg') }}" alt="Blog">
+                            <img src="{{ asset('storage/' . $post->image) }}" alt="Blog">
                         </div>
                         <div class="blog-cont">
-                            <a href="{{ route('blog.show') }}"><h3>Few tips for get better results in examination</h3></a>
+                            <a href="{{ route('blog.show', $post->id) }}"><h3>{{ $post->title }}</h3></a>
                             <ul>
-                                <li><a href="#"><i class="fa fa-calendar"></i>25 Dec 2018</a></li>
-                                <li><a href="#"><i class="fa fa-user"></i>Mark anthem</a></li>
-                                <li><a href="#"><i class="fa fa-tags"></i>Education</a></li>
+                                <li><a href="#"><i class="fa fa-calendar"></i>{{ $post->created_at->format('d M Y') }}</a></li>
+                                <li><a href="{{ route('writer.data', $post->user->id) }}"><i class="fa fa-user"></i>{{ $post->user->name }}</a></li>
+                                <li><a href="#"><i class="fa fa-tags"></i>{{ $post->category->name }}</a></li>
+                                @if($post->tags->count() > 0)
+                                <li>
+                                        <span class="d-flex">
+                                            <i class="fa fa-hashtag" style="color: #ffc600;"></i><?php $i = 0 ?>
+                                        @foreach($post->tags as $postTag)
+                                            @if($post->tags->count() > 1)
+                                                <?php $i++ ?>
+                                                @if($i == $post->tags->count())
+                                                        <a class="ml-1 p-0" href="{{ route('tag-blogs', $postTag->id) }}">{{ $postTag->name }}</a>
+                                                @else
+                                                        <a class="ml-1 p-0 mr-1" href="{{ route('tag-blogs', $postTag->id) }}">{{ $postTag->name }}</a> /
+                                                @endif
+                                            @else
+                                                <a class="ml-1 p-0" href="{{ route('tag-blogs', $postTag->id) }}">{{ $postTag->name }}</a>
+                                            @endif
+                                        @endforeach
+                                        </span>
+                                </li>
+                                @endif
                             </ul>
-                            <p>Lorem ipsum gravida nibh vel velit auctor aliquetn sollicitudirem quibibendum auci elit cons equat ipsutis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus .</p>
+                            <p>{{ $post->description }}</p>
+                            <a href="{{ route('blog.show', $post->id) }}" style="color: #ffc600; text-decoration: underline">Countinue Read</a>
                         </div>
                     </div> <!-- singel blog -->
-                    <div class="singel-blog mt-30">
-                        <div class="blog-thum">
-                            <img src="{{ asset('storage/frontEnd/blog/b-2.jpg') }}" alt="Blog">
-                        </div>
-                        <div class="blog-cont">
-                            <a href="blog-singel.html"><h3>Few tips for get better results in examination</h3></a>
-                            <ul>
-                                <li><a href="#"><i class="fa fa-calendar"></i>25 Dec 2018</a></li>
-                                <li><a href="#"><i class="fa fa-user"></i>Mark anthem</a></li>
-                                <li><a href="#"><i class="fa fa-tags"></i>Education</a></li>
-                            </ul>
-                            <p>Lorem ipsum gravida nibh vel velit auctor aliquetn sollicitudirem quibibendum auci elit cons equat ipsutis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus .</p>
-                        </div>
-                    </div> <!-- singel blog -->
-                    <nav class="courses-pagination mt-50">
+                    @empty
+                        <p class="alert alert-danger"><i class="fa fa-exclamation-triangle"></i> OOPS, No blogs founded</p>
+                    @endforelse
+                    {{-- <nav class="courses-pagination mt-50">
                         <ul class="pagination justify-content-lg-end justify-content-center">
                             <li class="page-item">
                                 <a href="#" aria-label="Previous">
@@ -75,83 +83,10 @@
                             </li>
                         </ul>
                     </nav>  <!-- courses pagination -->
+                    --}}
                 </div>
-                <div class="col-lg-4">
-                    <div class="saidbar">
-                        <div class="row">
-                            <div class="col-lg-12 col-md-6">
-                                <div class="saidbar-search mt-30">
-                                    <form action="#">
-                                        <input type="text" placeholder="Search">
-                                        <button type="button"><i class="fa fa-search"></i></button>
-                                    </form>
-                                </div> <!-- saidbar search -->
-                                <div class="categories mt-30">
-                                    <h4>Categories</h4>
-                                    <ul>
-                                        <li><a href="#">Fronted</a></li>
-                                        <li><a href="#">Backend</a></li>
-                                        <li><a href="#">Photography</a></li>
-                                        <li><a href="#">Teachnology</a></li>
-                                        <li><a href="#">GMET</a></li>
-                                        <li><a href="#">Language</a></li>
-                                        <li><a href="#">Science</a></li>
-                                        <li><a href="#">Accounting</a></li>
-                                    </ul>
-                                </div>
-                            </div> <!-- categories -->
-                            <div class="col-lg-12 col-md-6">
-                                <div class="saidbar-post mt-30">
-                                    <h4>Popular Posts</h4>
-                                    <ul>
-                                        <li>
-                                            <a href="#">
-                                                <div class="singel-post">
-                                                    <div class="thum">
-                                                        <img src="{{ asset('storage/frontEnd/blog/blog-post/bp-1.jpg') }}" alt="Blog">
-                                                    </div>
-                                                    <div class="cont">
-                                                        <h6>Introduction to languages</h6>
-                                                        <span>20 Dec 2018</span>
-                                                    </div>
-                                                </div> <!-- singel post -->
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <div class="singel-post">
-                                                    <div class="thum">
-                                                        <img src="{{ asset('storage/frontEnd/blog/blog-post/bp-2.jpg') }}" alt="Blog">
-                                                    </div>
-                                                    <div class="cont">
-                                                        <h6>How to build a game with java</h6>
-                                                        <span>10 Dec 2018</span>
-                                                    </div>
-                                                </div> <!-- singel post -->
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <div class="singel-post">
-                                                    <div class="thum">
-                                                        <img src="{{ asset('storage/frontEnd/blog/blog-post/bp-1.jpg') }}" alt="Blog">
-                                                    </div>
-                                                    <div class="cont">
-                                                        <h6>Basic accounting from primary</h6>
-                                                        <span>07 Dec 2018</span>
-                                                    </div>
-                                                </div> <!-- singel post -->
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div> <!-- saidbar post -->
-                            </div>
-                        </div> <!-- row -->
-                    </div> <!-- saidbar -->
-                </div>
+                @include('layouts.frontEnd.blog.sideBar')
             </div> <!-- row -->
         </div> <!-- container -->
     </section>
-
-    <!--====== BLOG PART ENDS ======-->
 @endsection

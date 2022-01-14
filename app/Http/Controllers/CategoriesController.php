@@ -10,13 +10,13 @@ class CategoriesController extends Controller
     /* ====== index function to go to categories index page with values of all categories in Category model ====== */
     public function index()
     {
-        return view('categories.index')->with('categories',Category::all());
+        return view('dashboard.categories.index')->with('categories',Category::all());
     }
 
     /* ====== create function to go to the create blade to get the form of create ====== */
     public function create()
     {
-        return view('categories.create');
+        return view('dashboard.categories.create');
     }
 
     /* ====== store function to go to the create blade to get the form of create ====== */
@@ -36,13 +36,13 @@ class CategoriesController extends Controller
     }
 
     /* ====== edit function to go to the edit blade to update the data of tag from the form of edit ====== */
-    public function edit(Category $category)
+    public function edit(Category $category)   // ### the object of Category is called Model binding
     {
         // ####### if I used the same form of create to be update form
         // return view('categories.create')->with('category', $category);
 
         // ####### this is to go mainly to edit form
-        return view('categories.edit')->with('category', $category);
+        return view('dashboard.categories.edit')->with('category', $category);
     }
 
     // ######## update function for categories

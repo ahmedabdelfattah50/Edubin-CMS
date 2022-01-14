@@ -6,7 +6,6 @@
 
             <div class="card-header">
             {{-- ######### this is if I used the same form of create to be update form ######### --}}
-{{--                {{ isset($category) ? "Update Category" : "Add Category" }}--}}
                 Add Tag
             </div>
             <div class="card-body">

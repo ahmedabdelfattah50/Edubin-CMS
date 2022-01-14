@@ -22,4 +22,15 @@ class PostRequest extends FormRequest
             'image' => 'required|image'
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'title.required' => 'The title is required',
+            'description.required' => 'The description is required',
+            'categoryID.required' => 'The category ID is required',
+            'postContent.required' => 'The post content is required',
+            'image.required' => 'The image is required',
+        ];
+    }
 }

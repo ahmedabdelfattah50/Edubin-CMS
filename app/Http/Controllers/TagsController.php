@@ -11,13 +11,13 @@ class TagsController extends Controller
     /* ====== index function to go to tage index page with values of all tags in tag model ====== */
     public function index()
     {
-        return view('tags.index')->with('tags', Tag::all());
+        return view('dashboard.tags.index')->with('tags', Tag::all());
     }
 
     /* ====== create function to go to the create blade to get the form of create ====== */
     public function create()
     {
-        return view('tags.create');
+        return view('dashboard.tags.create');
     }
 
     /* ====== store function to go to the create blade to get the form of create ====== */
@@ -40,7 +40,7 @@ class TagsController extends Controller
     public function edit(Tag $tag)
     {
         // ####### this is to go mainly to edit form
-        return view('tags.edit')->with('tag', $tag);
+        return view('dashboard.tags.edit')->with('tag', $tag);
     }
 
     // ######## update function for tags

@@ -20,4 +20,13 @@ class UpdatePostRequest extends FormRequest
             'content' => 'required'
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'title.required' => 'The title is required',
+            'description.required' => 'The description is required',
+            'content.required' => 'The content ID is required',
+        ];
+    }
 }

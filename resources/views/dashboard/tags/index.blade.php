@@ -2,9 +2,11 @@
 
 @section('content')
     <div class="container">
-        <div class="btnsOptions d-flex justify-content-end mb-3">
-            <a href="{{ route('tags.create') }}" class="btn btn-success mr-1 ml-1">Add Tag</a>
-        </div>
+        @if(auth()->user()->isAdmin())
+            <div class="btnsOptions d-flex justify-content-end mb-3">
+                <a href="{{ route('tags.create') }}" class="btn btn-success mr-1 ml-1">Add Tag</a>
+            </div>
+        @endif
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
@@ -16,7 +18,9 @@
                             <thead>
                             <tr>
                                 <th scope="col">Name</th>
-                                <th scope="col">Options</th>
+                                @if(auth()->user()->isAdmin())
+                                    <th scope="col">Options</th>
+                                @endif
                             </tr>
                             </thead>
                             <tbody>
@@ -24,16 +28,18 @@
                             @foreach($tags as $tag)
                                 <tr>
                                     <td><h4>{{ $tag->name }} <span class="badge badge-warning">{{ $tag->posts->count() }}</span></h4></td>
-                                    <td>
-                                        <div class="btnsOptions pt-2">
-                                            <a href="{{ route('tags.edit', $tag->id) }}" class="btn btn-primary">Edit <i class="far fa-edit"></i></a>
-                                            <form action="{{ route('tags.destroy', $tag->id) }}" class="d-inline-block" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <input type="submit" class="btn btn-danger" value="Delete">
-                                            </form>
-                                        </div>
-                                    </td>
+                                    @if(auth()->user()->isAdmin())
+                                        <td>
+                                            <div class="btnsOptions pt-2">
+                                                <a href="{{ route('tags.edit', $tag->id) }}" class="btn btn-primary">Edit <i class="far fa-edit"></i></a>
+                                                <form action="{{ route('tags.destroy', $tag->id) }}" class="d-inline-block" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <input type="submit" class="btn btn-danger" value="Delete">
+                                                </form>
+                                            </div>
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                             </tbody>

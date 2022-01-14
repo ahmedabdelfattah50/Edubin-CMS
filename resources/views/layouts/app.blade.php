@@ -12,7 +12,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -20,15 +20,17 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 
     <!-- Styles -->
-    @yield('styleTrix')
+    @yield('styleField')
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                <a class="navbar-brand" href="
+                        {{ url('/homeWriterDash') }}
+                    ">
+                    <img src="{{ asset('storage/frontEnd/logo.png') }}" alt="">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -59,6 +61,10 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('users.profileEdit', Auth()->user()->id) }}">
+                                        My Profile
+                                    </a>
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -102,10 +108,19 @@
             @auth
                 <div class="row">
                     <div class="list-group py-4 col-md-4">
-                        <a href="{{ route('categories.index') }}" class="list-group-item list-group-item-action">Categories</a>
-                        <a href="{{ route('tags.index') }}" class="list-group-item list-group-item-action">Tags</a>
-                        <a href="{{ route('posts.index') }}" class="list-group-item list-group-item-action">Posts</a>
-                        <a href="{{ route('trashedPosts.index') }}" class="list-group-item list-group-item-action">Trashed Posts</a>
+                        @if(auth()->user()->isAdmin())
+                            <a href="{{ route('dashboard.index') }}" class="list-group-item list-group-item-action">Dashboard</a>
+                            <a href="{{ route('users.index') }}" class="list-group-item list-group-item-action">Users <span class="badge badge-warning">{{ \App\User::count() }}</span></a>
+                            <a href="{{ route('contactUs.messages') }}" class="list-group-item list-group-item-action">Contacts Messages <span class="badge badge-warning">{{ \App\Contact::count() }}</span></a>
+                        @endif
+                        <a href="{{ route('categories.index') }}" class="list-group-item list-group-item-action">Categories <span class="badge badge-warning">{{ \App\Category::count() }}</span></a>
+                        <a href="{{ route('tags.index') }}" class="list-group-item list-group-item-action">Tags <span class="badge badge-warning">{{ \App\Tag::count() }}</span></a>
+                        <a href="{{ route('posts.index') }}" class="list-group-item list-group-item-action">All Posts <span class="badge badge-warning">{{ \App\Post::count() }}</span></a>
+                        <a href="{{ route('myPosts.index') }}" class="list-group-item list-group-item-action">My Posts <span class="badge badge-warning">{{ Auth()->user()->posts->count() }}</span></a>
+                        @if(auth()->user()->isAdmin())
+                            <a href="{{ route('trashedPosts.index') }}" class="list-group-item list-group-item-action">Trashed Posts <span class="badge badge-warning">{{ \App\Post::onlyTrashed()->count() }}</span></a>
+                        @endif
+                        <a href="{{ route('users.profileEdit', Auth()->user()->id) }}" class="list-group-item list-group-item-action">My Profile</a>
                     </div>
                     <main class="py-4 col-md-8">
                         @yield('content')
