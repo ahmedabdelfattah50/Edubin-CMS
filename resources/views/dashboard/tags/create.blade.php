@@ -24,7 +24,7 @@
                     @csrf
                     <div class="form-group">
                         <label for="exampleInputEmail1">Tag Name</label>
-                        <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" placeholder="Enter Name">
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" placeholder="Enter Name" required>
                         @error('name')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror

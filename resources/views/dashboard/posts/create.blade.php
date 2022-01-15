@@ -18,21 +18,21 @@
                     @csrf
                     <div class="form-group">
                         <label for="exampleInputEmail1">Title</label>
-                        <input name="title" type="text" class="form-control @error('title') is-invalid @enderror" placeholder="Enter Title">
+                        <input name="title" type="text" value="{{ old('title') }}" class="form-control @error('title') is-invalid @enderror" placeholder="Enter Title" required>
                         @error('title')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Description</label>
-                        <textarea name="description" class="form-control @error('description') is-invalid @enderror" placeholder="Enter Description" rows="3"></textarea>
+                        <textarea name="description" value="{{ old('description') }}" class="form-control @error('description') is-invalid @enderror" placeholder="Enter Description" rows="3" required></textarea>
                         @error('description')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Content</label>
-                        <input id="x" class="form-control @error('postContent') is-invalid @enderror" placeholder="Enter Content" type="hidden" name="postContent">
+                        <input id="x" class="form-control @error('postContent') is-invalid @enderror" placeholder="Enter Content" type="hidden" name="postContent" value="{{ old('postContent') }}" required>
                         <trix-editor input="x" placeholder="Enter Content"></trix-editor>
                         @error('postContent')
                             <div class="alert alert-danger">{{ $message }}</div>
@@ -40,7 +40,7 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Image</label>
-                        <input name="image" type="file" class="form-control @error('image') is-invalid @enderror">
+                        <input name="image" type="file" class="form-control @error('image') is-invalid @enderror" required>
                         @error('image')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror

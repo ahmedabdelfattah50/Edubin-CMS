@@ -31,6 +31,7 @@
                     @forelse($posts as $post)
                     <div class="singel-blog mt-30">
                         <div class="blog-thum">
+
                             <img src="{{ asset('storage/' . $post->image) }}" alt="Blog">
                         </div>
                         <div class="blog-cont">

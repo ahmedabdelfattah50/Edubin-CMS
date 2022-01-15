@@ -3,17 +3,6 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 // ======== this route to go to welcome page
 Route::get('/', 'HomeController@index')->name('website.home');
 
@@ -48,34 +37,28 @@ Route::group(['middleware' => 'auth'], function (){
 Route::middleware(['auth', 'admin'])->group(function (){
     Route::get('/homeAdminDash', 'DashboardController@index')->name('dashboard.index');
     Route::get('/users', 'UsersController@index')->name('users.index');
-//    Route::get('/users/create', 'UsersController@create')->name('users.create');
-
     Route::get('/contact-us/messages', 'FrontEnd\ContactController@getMessages')->name('contactUs.messages');
     Route::get('/contact-us/messages/{id}', 'FrontEnd\ContactController@showMessage')->name('contactUs.showMessage');
     Route::get('/contact-us/messages/{id}/delete', 'FrontEnd\ContactController@deleteMessage')->name('contactUs.deleteMessage');
-
     Route::post('/users/{user}/make-admin','UsersController@makeAdmin')->name('users.make-admin');
     Route::post('/users/{user}/make-writer','UsersController@makeWriter')->name('users.make-writer');
 });
 
+// ######### routes must auth from the middleware 'auth' #########
 Route::middleware(['auth'])->group(function (){
     Route::get('users/{user}/profile','UsersController@edit')->name('users.profileEdit');
     Route::post('users/{user}/profile','UsersController@update')->name('users.profileUpdate');
-
     Route::get('/my-posts','PostsController@myPosts')->name('myPosts.index');
 });
 
 // ######### frontEnd routes #########
-
 Route::namespace('FrontEnd')->group(function (){
     Route::get('/blogs', 'BlogController@index')->name('blogs.index');
     Route::get('/blogs/search-result', 'BlogController@search')->name('blogs.search');
     Route::get('/category-blogs/{catID}', 'BlogController@categoryBlogs')->name('category-blogs');
     Route::get('/tag-blogs/{tagID}', 'BlogController@tagBlogs')->name('tag-blogs');
     Route::get('/blog/{id}', 'BlogController@show')->name('blog.show');
-
     Route::get('/writer/{writerID}', 'WriterController@show')->name('writer.data');
-
     Route::get('/contact-us', 'ContactController@index')->name('contact.index');
     Route::post('/contact-us/store', 'ContactController@store')->name('contactUs.store');
 });
