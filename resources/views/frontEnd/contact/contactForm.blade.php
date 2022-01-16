@@ -2,6 +2,8 @@
 
 @section('title', 'Contact Us')
 
+<?php $pageActive = 'contact' ?>
+
 @section('content')
     <!--====== PAGE BANNER PART START ======-->
 

@@ -62,3 +62,7 @@ Route::namespace('FrontEnd')->group(function (){
     Route::get('/contact-us', 'ContactController@index')->name('contact.index');
     Route::post('/contact-us/store', 'ContactController@store')->name('contactUs.store');
 });
+
+Route::get('/email', 'PostsController@sendEmail');
+
+//Route::get('/getLastPostOfUser' , 'PostsController@getLastPostOfUser');

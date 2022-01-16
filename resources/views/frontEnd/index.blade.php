@@ -2,6 +2,8 @@
 
 @section('title', 'Edubin')
 
+<?php $pageActive = 'home' ?>
+
 @section('content')
     <!--====== SLIDER PART START ======-->
 

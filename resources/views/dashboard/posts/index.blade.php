@@ -38,16 +38,21 @@
                                             @if(!$post->trashed())
                                                 <a href="{{ route('posts.show', $post->id) }}" class="btn btn-success">View <i class="far fa-eye"></i></a>
                                             @endif
-                                            @if(!$post->trashed())
-                                                <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-primary">Edit <i class="far fa-edit"></i></a>
-                                            @else
-                                                <a href="{{ route('trashedPosts.restore', $post->id) }}" class="btn btn-primary">Restore <i class="far fa-window-restore"></i></a>
+
+                                            {{-- ##### this to show edit and trash buttons only for writers who owns this post ##### --}}
+                                            @if(auth()->user()->id == $post->user_id)
+                                                @if(!$post->trashed())
+                                                    <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-primary">Edit <i class="far fa-edit"></i></a>
+                                                @else
+                                                    <a href="{{ route('trashedPosts.restore', $post->id) }}" class="btn btn-primary">Restore <i class="far fa-window-restore"></i></a>
+                                                @endif
+                                                <form action="{{ route('posts.destroy', $post->id) }}" class="d-inline-block" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <input type="submit" class="btn btn-danger" value="{{ $post->trashed() ? 'Delete' : 'Trash'}}">
+                                                </form>
                                             @endif
-                                            <form action="{{ route('posts.destroy', $post->id) }}" class="d-inline-block" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <input type="submit" class="btn btn-danger" value="{{ $post->trashed() ? 'Delete' : 'Trash'}}">
-                                            </form>
+
                                         @endguest
                                     </div>
                                 </td>

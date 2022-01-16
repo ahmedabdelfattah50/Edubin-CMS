@@ -7,6 +7,8 @@ use App\Http\Requests\PostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Post;
 use App\Tag;
+use App\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
 class PostsController extends Controller
@@ -145,5 +147,66 @@ class PostsController extends Controller
             'posts' => $posts,
             'myPosts' => "myPosts"
         ]);
+    }
+
+    public function sendEmail(){
+        return view('dashboard.email.sendEmail');
+    }
+
+    public function getLastPostOfUser(){
+        // ####### get all writers in the database
+        $users = User::where('role' , 'writer')->get();
+
+        foreach ($users as $user){
+            $userPosts = Post::where('user_id', $user->id)->get();
+
+            foreach ($userPosts as $userPost){
+
+                    if( $userPost == $userPosts->last() ){
+                        $userLastPost = $userPosts->last();
+
+                        $currentDate = Carbon::createFromFormat('Y-m-d', date('Y-m-d'));
+                        $postCreatedDate = Carbon::createFromFormat('Y-m-d', $userLastPost->created_at->format('Y-m-d'));
+                        $diff_in_days = $currentDate->diffInDays($postCreatedDate);
+                        $userEmail = $user->email;
+
+                        echo "<br>" . "user Id: " . $user->id . " last Post Id: " . $userLastPost->id . " >>>>> " . $diff_in_days;
+
+                        // #### if the user last blog created since one week the task scheduler send him a notify email
+                        if($diff_in_days > 7){
+                            // #### send the email to the user
+
+                            echo " Email: " . $userEmail . "<br>";
+
+//                    $userLastPost->update(['title' => "## RERTwewerewW"]);
+                            //                Mail::To($userEmail)->send(new WriterAlertMail($user));
+                        }
+                    }
+
+                /*
+                $userLastPost = $userPosts->last();
+
+                $currentDate = Carbon::createFromFormat('Y-m-d', date('Y-m-d'));
+                $postCreatedDate = Carbon::createFromFormat('Y-m-d', $userLastPost->created_at->format('Y-m-d'));
+                $diff_in_days = $currentDate->diffInDays($postCreatedDate);
+                $userEmail = $user->email;
+
+                // #### if the user last blog created since one week the task scheduler send him a notify email
+                if($diff_in_days > 7){
+                    // #### send the email to the user
+
+                    dd($userLastPost);
+
+//                    $userLastPost->update(['title' => "## RERTwewerewW"]);
+    //                Mail::To($userEmail)->send(new WriterAlertMail($user));
+                }*/
+            }
+
+
+        }
+
+//        dd(count($userPosts));
+
+
     }
 }

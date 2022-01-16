@@ -2,6 +2,8 @@
 
 @section('title', 'Search Blogs')
 
+<?php $pageActive = 'blogs' ?>
+
 @section('content')
     <!--====== PAGE BANNER PART START ======-->
     <section id="page-banner" class="pt-105 pb-130 bg_cover" data-overlay="8" style="background-image: url({{ asset('storage/frontEnd/page-banner-4.jpg') }})">

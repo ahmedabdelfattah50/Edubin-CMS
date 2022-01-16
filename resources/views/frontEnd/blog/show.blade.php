@@ -2,6 +2,8 @@
 
 @section('title', 'Blog')
 
+<?php $pageActive = 'blogs' ?>
+
 @section('content')
     <!--====== PAGE BANNER PART START ======-->
 

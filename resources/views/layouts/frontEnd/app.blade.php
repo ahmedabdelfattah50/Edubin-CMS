@@ -108,8 +108,9 @@
 
                             <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                                 <ul class="navbar-nav ml-auto">
+
                                     <li class="nav-item">
-                                        <a class="active" href="{{ route('website.home') }}">Home</a>
+                                        <a @if($pageActive == 'home') class="active" @endif href="{{ route('website.home') }}">Home</a>
                                     </li>
 {{--                                    <li class="nav-item">--}}
 {{--                                        <a href="about.html">About us</a>--}}
@@ -135,8 +136,9 @@
 {{--                                            <li><a href="teachers-singel.html">teacher Singel</a></li>--}}
 {{--                                        </ul>--}}
 {{--                                    </li>--}}
+
                                     <li class="nav-item">
-                                        <a href="{{ route('blogs.index') }}">Blogs</a>
+                                        <a @if($pageActive == 'blogs') class="active" @endif href="{{ route('blogs.index') }}">Blogs</a>
                                     </li>
 {{--                                    <li class="nav-item">--}}
 {{--                                        <a href="shop.html">Shop</a>--}}
@@ -146,7 +148,7 @@
 {{--                                        </ul>--}}
 {{--                                    </li>--}}
                                     <li class="nav-item">
-                                        <a href="{{ route('contact.index') }}">Contact</a>
+                                        <a @if($pageActive == 'contact') class="active" @endif href="{{ route('contact.index') }}">Contact</a>
 {{--                                        <ul class="sub-menu">--}}
 {{--                                            <li><a href="contact.html">Contact Us</a></li>--}}
 {{--                                            <li><a href="contact-2.html">Contact Us 2</a></li>--}}
