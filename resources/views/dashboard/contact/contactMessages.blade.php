@@ -14,7 +14,6 @@
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Name</th>
-                                <th scope="col">Email</th>
                                 <th scope="col">Subject</th>
                                 <th scope="col">Objects</th>
                             </tr>
@@ -27,7 +26,6 @@
                                         {{ $counter }}
                                     </th>
                                     <td><h4>{{ $message->name }}</h4></td>
-                                    <td><h4>{{ $message->email }}</h4></td>
                                     <td><h4><span class="badge badge-warning">{{ $message->subject }}</span></h4></td>
                                     <td>
                                         <div class="btnsOptions pt-2">

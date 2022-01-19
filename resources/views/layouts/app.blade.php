@@ -110,15 +110,20 @@
                     <div class="list-group py-4 col-md-4">
                         @if(auth()->user()->isAdmin())
                             <a href="{{ route('dashboard.index') }}" class="list-group-item list-group-item-action">Dashboard</a>
-                            <a href="{{ route('users.index') }}" class="list-group-item list-group-item-action">Users <span class="badge badge-warning">{{ \App\User::count() }}</span></a>
-                            <a href="{{ route('contactUs.messages') }}" class="list-group-item list-group-item-action">Contacts Messages <span class="badge badge-warning">{{ \App\Contact::count() }}</span></a>
+                            <a href="{{ route('users.index') }}" class="list-group-item list-group-item-action">Users <span class="badge badge-{{ App\User::count() ? 'warning' : 'danger'}}">{{ App\User::count() }}</span></a>
+                            <a href="{{ route('contactUs.messages') }}" class="list-group-item list-group-item-action">Contacts Messages <span class="badge badge-{{ App\Contact::count() ? 'success' : 'danger'}}">{{ App\Contact::count() }}</span></a>
                         @endif
-                        <a href="{{ route('categories.index') }}" class="list-group-item list-group-item-action">Categories <span class="badge badge-warning">{{ \App\Category::count() }}</span></a>
-                        <a href="{{ route('tags.index') }}" class="list-group-item list-group-item-action">Tags <span class="badge badge-warning">{{ \App\Tag::count() }}</span></a>
-                        <a href="{{ route('posts.index') }}" class="list-group-item list-group-item-action">All Posts <span class="badge badge-warning">{{ \App\Post::count() }}</span></a>
-                        <a href="{{ route('myPosts.index') }}" class="list-group-item list-group-item-action">My Posts <span class="badge badge-warning">{{ Auth()->user()->posts->count() }}</span></a>
+                        <a href="{{ route('categories.index') }}" class="list-group-item list-group-item-action">Categories <span class="badge badge-{{ App\Category::count() ? 'warning' : 'danger'}}">{{ App\Category::count() }}</span></a>
+                        <a href="{{ route('tags.index') }}" class="list-group-item list-group-item-action">Tags <span class="badge badge-{{ App\Tag::count() ? 'warning' : 'danger'}}">{{ App\Tag::count() }}</span></a>
+                        <a href="{{ route('posts.index') }}" class="list-group-item list-group-item-action">All Posts <span class="badge badge-{{ App\Post::count() ? 'warning' : 'danger'}}">{{ App\Post::count() }}</span></a>
+                        <a href="{{ route('getNewPosts.index') }}" class="list-group-item list-group-item-action">New Posts <span class="badge badge-{{ App\Post::count() ? 'success' : 'danger'}}">noooooooo</span></a>
+                        <a href="{{ route('myPosts.index') }}" class="list-group-item list-group-item-action">My Posts <span class="badge badge-{{ Auth()->user()->posts->count() ? 'warning' : 'danger'}}">{{ Auth()->user()->posts->count() }}</span></a>
                         @if(auth()->user()->isAdmin())
-                            <a href="{{ route('trashedPosts.index') }}" class="list-group-item list-group-item-action">Trashed Posts <span class="badge badge-warning">{{ \App\Post::onlyTrashed()->count() }}</span></a>
+                            <a href="{{ route('trashedPosts.index') }}" class="list-group-item list-group-item-action">All Trashed Posts <span class="badge badge-{{ App\Post::onlyTrashed()->count() ? 'warning' : 'danger'}}">{{ App\Post::onlyTrashed()->count() }}</span></a>
+                        @endif
+                        <a href="{{ route('myTrashedPosts.index') }}" class="list-group-item list-group-item-action">My Trashed Posts <span class="badge badge-{{ Auth()->user()->trashedPosts()->count() ? 'warning' : 'danger'}}">{{ Auth()->user()->trashedPosts()->count() }}</span></a>
+                        @if(auth()->user()->isAdmin())
+                            <a href="{{ route('requestsTrashedPosts.index') }}" class="list-group-item list-group-item-action">Restore Requests <span class="badge badge-{{ App\Post::onlyTrashed()->count() ? 'success' : 'danger'}}">nooooooooo</span></a>
                         @endif
                         <a href="{{ route('users.profileEdit', Auth()->user()->id) }}" class="list-group-item list-group-item-action">My Profile</a>
                     </div>

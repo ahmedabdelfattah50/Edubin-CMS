@@ -34,6 +34,12 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
+    public function trashedPosts(){
+//        return $this->hasMany(Post::onlyTrashed());
+        return Post::onlyTrashed()->where('user_id', $this->id)->get();
+//        return $this->posts()->whereNotNull('deleted_at')->get();
+    }
+
     public function getAvatar(){
         if(! $this->profile->avatar){
             return 'images/default_avatar.png';

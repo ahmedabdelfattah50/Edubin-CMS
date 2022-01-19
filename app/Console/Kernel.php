@@ -12,10 +12,12 @@ class Kernel extends ConsoleKernel
         WriterAutoMail::class
     ];
 
+
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('writer:autoMail')->everyMinute();
     }
+
 
     protected function commands()
     {

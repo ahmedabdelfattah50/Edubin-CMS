@@ -42,7 +42,7 @@
                             <h3>{{ $post->title }}</h3>
                             <ul>
                                 <li><a href="#"><i class="fa fa-calendar"></i>{{ $post->created_at->format('d M Y') }}</a></li>
-                                <li><a href="#"><i class="fa fa-user"></i>{{ $post->user->name }}</a></li>
+                                <li><a href="{{ route('writer.data', $post->user->id) }}"><i class="fa fa-user"></i>{{ $post->user->name }}</a></li>
                                 <li><a href="#"><i class="fa fa-tags"></i>{{ $post->category->name }}</a></li>
                                 @if($post->tags->count() > 0)
                                     <li>

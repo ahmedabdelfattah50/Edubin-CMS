@@ -10,7 +10,7 @@ class Post extends Model
 {
     use SoftDeletes;
     protected $fillable = [
-        'title', 'description', 'user_id', 'category_id', 'content', 'image'
+        'title', 'description', 'user_id', 'category_id', 'accepted', 'request_restore', 'content', 'image'
     ];
 
     public function category(){
@@ -28,4 +28,14 @@ class Post extends Model
     public function hasTag($tagId){
         return in_array($tagId, $this->tags->pluck('id')->toArray());
     }
+
+    public function newPosts(){
+        return Post::all()->where('accepted', 'no');
+    }
+
+    // ######### get posts in page of requests restore
+//    const function requestsTrashedPosts(){
+//        $requestedTrashedPosts = Post::onlyTrashed()->where('request_restore', 'yes')->get();
+//        return $requestedTrashedPosts->count();
+//    }
 }

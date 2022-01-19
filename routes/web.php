@@ -26,11 +26,26 @@ Route::group(['middleware' => 'auth'], function (){
     // ======== route resource of posts
     Route::resource('/posts','PostsController');
 
-    // ======== route for trashed-posts restore posts
-    Route::get('/trashed-posts/{id}', 'PostsController@restoreTrashed')->name('trashedPosts.restore');
+    // ======== route to get new posts
+    Route::get('/new-posts', 'PostsController@getNewPosts')->name('getNewPosts.index');
 
     // ======== route for trashed-posts posts
     Route::get('/trashed-posts', 'PostsController@trashedPosts')->name('trashedPosts.index');
+
+    // ======== route for trashed-posts restore posts
+    Route::get('/trashed-posts/{id}', 'PostsController@restoreTrashed')->name('trashedPosts.restore');
+
+    // ======== route for showing trashed-post
+    Route::get('/trashed-post/{id}', 'PostsController@showTrashedPost')->name('trashedPosts.showTrashedPost');
+
+    // ======== route for restore requests trashed-posts posts
+    Route::get('/request-restore/trashed-posts', 'PostsController@requestsTrashedPosts')->name('requestsTrashedPosts.index');
+
+    // ======== route for requesting to restore post
+    Route::get('/request-to-restore-post/{id}', 'PostsController@requestToRestorePost')->name('requestToRestoreTrashedPosts.requestToRestorePost');
+
+    // ======== route for requesting to restore post
+    Route::get('/chancel-request-to-restore-post/{id}', 'PostsController@chancelRequestToRestorePost')->name('chancelRequestToRestoreTrashedPosts.chancelRequestToRestorePost');
 });
 
 // ##### this group of routes have relations with middlewares >>> auth , admin
@@ -49,6 +64,7 @@ Route::middleware(['auth'])->group(function (){
     Route::get('users/{user}/profile','UsersController@edit')->name('users.profileEdit');
     Route::post('users/{user}/profile','UsersController@update')->name('users.profileUpdate');
     Route::get('/my-posts','PostsController@myPosts')->name('myPosts.index');
+    Route::get('/my-trashed-posts','PostsController@myTrashedPosts')->name('myTrashedPosts.index');
 });
 
 // ######### frontEnd routes #########
@@ -63,6 +79,6 @@ Route::namespace('FrontEnd')->group(function (){
     Route::post('/contact-us/store', 'ContactController@store')->name('contactUs.store');
 });
 
-Route::get('/email', 'PostsController@sendEmail');
+//Route::get('/email', 'PostsController@sendEmail');
 
 //Route::get('/getLastPostOfUser' , 'PostsController@getLastPostOfUser');

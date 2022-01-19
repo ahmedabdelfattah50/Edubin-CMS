@@ -21,7 +21,15 @@ class PostsController extends Controller
     // ######### index function to return to index page
     public function index()
     {
-        return view('dashboard.posts.index')->with('posts',Post::all());
+        $posts = Post::all()->where('accepted', 'yes');
+        return view('dashboard.posts.index')->with('posts', $posts);
+    }
+
+    // ######### getNewPosts function to return new posts into index page
+    public function getNewPosts()
+    {
+        $posts = Post::all()->where('accepted', 'no');
+        return view('dashboard.posts.index')->with('posts', $posts);
     }
 
     // ######### create function to return to create form
@@ -38,14 +46,26 @@ class PostsController extends Controller
         // #### this is to store the image in the folder in public
         $imageStore = $request->image->store('posts','public');
 
-        $post = Post::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'user_id' => $request->user_id,
-            'category_id' => $request->categoryID,
-            'content' => $request->postContent,
-            'image' => $imageStore
-        ]);
+        if(auth()->user()->isAdmin()){
+            $post = Post::create([
+                'title' => $request->title,
+                'description' => $request->description,
+                'user_id' => $request->user_id,
+                'category_id' => $request->categoryID,
+                'accepted' => 'yes',
+                'content' => $request->postContent,
+                'image' => $imageStore
+            ]);
+        } else {
+            $post = Post::create([
+                'title' => $request->title,
+                'description' => $request->description,
+                'user_id' => $request->user_id,
+                'category_id' => $request->categoryID,
+                'content' => $request->postContent,
+                'image' => $imageStore
+            ]);
+        }
 
         /* this to achieve the relationship between posts and tags
            and store data in posts_tags table this relationship is many to many */
@@ -61,6 +81,13 @@ class PostsController extends Controller
 
     public function show(Post $post)
     {
+        $post = Post::withTrashed()->where('id',$post->id)->first();
+        return view('dashboard.posts.show')->with('post',$post);
+    }
+
+    public function showTrashedPost($id)
+    {
+        $post = Post::withTrashed()->where('id',$id)->first();
         return view('dashboard.posts.show')->with('post',$post);
     }
 
@@ -128,15 +155,34 @@ class PostsController extends Controller
     // ######### get all trashed posts
     public function trashedPosts(){
         $trashedPosts = Post::onlyTrashed()->get();
-        return view('dashboard.posts.index')->with('posts',$trashedPosts);
+        return view('dashboard.posts.index', ['posts' => $trashedPosts,
+            'trashedPosts' => 'trash']);
     }
 
     // ######### restore trashed posts
     public function restoreTrashed($id){
+        Post::withTrashed()->where('id', $id)->update(['request_restore' => 'no']);
         Post::withTrashed()->where('id',$id)->restore();
-
         // return success message in the posts index page
         session()->flash('success','The post has been restored successfully');
+        return redirect(route('posts.index'));
+    }
+
+    // ######### restore trashed posts
+    public function requestToRestorePost($id){
+        $post = Post::withTrashed()->where('id',$id);
+        $post->update(['request_restore' => 'yes']);
+        // return success message in the posts index page
+        session()->flash('success','The request of restored post is sent successfully');
+        return redirect(route('posts.index'));
+    }
+
+    // ######### chancel restore trashed posts
+    public function chancelRequestToRestorePost($id){
+        $post = Post::withTrashed()->where('id',$id);
+        $post->update(['request_restore' => 'no']);
+        // return success message in the posts index page
+        session()->flash('warning','The request of is chancel successfully');
         return redirect(route('posts.index'));
     }
 
@@ -146,6 +192,26 @@ class PostsController extends Controller
         return view('dashboard.posts.index', [
             'posts' => $posts,
             'myPosts' => "myPosts"
+        ]);
+    }
+
+    // ######### get my trashed posts in the page
+    public function myTrashedPosts(){
+        $trashedPosts = Post::onlyTrashed()->where('user_id', Auth()->user()->id)->get();
+        return view('dashboard.posts.index', [
+            'posts' => $trashedPosts,
+            'trashedPosts' => $trashedPosts,
+            'myTrashedPosts' => "myTrashedPosts"
+        ]);
+    }
+
+    // ######### get posts in page of requests restore
+    public function requestsTrashedPosts(){
+        $requestedTrashedPosts = Post::onlyTrashed()->where('request_restore', 'yes')->get();
+        return view('dashboard.posts.index', [
+            'posts' => $requestedTrashedPosts,
+//            'trashedPosts' => $requestedTrashedPosts,
+            'myTrashedPosts' => "myTrashedPosts"
         ]);
     }
 

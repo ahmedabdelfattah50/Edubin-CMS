@@ -14,6 +14,8 @@ class CreatePostsTable extends Migration
             $table->string('description');
             $table->integer('user_id');
             $table->integer('category_id');
+            $table->string('accepted')->default('no');
+            $table->string('request_restore')->default('no');
             $table->text('content');
             $table->string('image');
             $table->timestamps();
