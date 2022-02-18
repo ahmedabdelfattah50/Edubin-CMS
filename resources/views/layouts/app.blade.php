@@ -108,6 +108,7 @@
             @auth
                 <div class="row">
                     <div class="list-group py-4 col-md-4">
+                    <span class="alert alert-primary">Hint .... the counts not compeleted</span>
                         @if(auth()->user()->isAdmin())
                             <a href="{{ route('dashboard.index') }}" class="list-group-item list-group-item-action">Dashboard</a>
                             <a href="{{ route('users.index') }}" class="list-group-item list-group-item-action">Users <span class="badge badge-{{ App\User::count() ? 'warning' : 'danger'}}">{{ App\User::count() }}</span></a>

@@ -66,8 +66,6 @@
                                                         <a href="{{ route('requestToRestoreTrashedPosts.requestToRestorePost', $post->id) }}" class="btn btn-primary">Request to restore <i class="far fa-window-restore"></i></a>
                                                     @endif
                                                 @endif
-
-
                                                 @if($post->trashed() && auth()->user()->isAdmin())
                                                     <form action="{{ route('posts.destroy', $post->id) }}" class="d-inline-block" method="POST">
                                                         @csrf
@@ -87,14 +85,6 @@
                                                         <input type="submit" class="btn btn-danger" value="Trash">
                                                     </form>
                                                 @endif
-
-
-
-                                                {{ $post->newPosts()->count() }}
-
-
-
-
                                             @endif
                                         @endguest
                                     </div>
